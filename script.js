@@ -1,8 +1,8 @@
 let data  = d3.csv('driving.csv', d3.autoType).then(data=>{
 
-const margin = ({top: 50, right: 140, bottom: 40, left: 140});
+const margin = ({top: 35, right: 140, bottom: 70, left: 140});
 const width = 1200 - margin.left - margin.right;
-const height = 650 - margin.top - margin.bottom;
+const height = 625 - margin.top - margin.bottom;
 
 const svg = d3.select('.chart').append('svg')
     .attr("width", width + margin.left + margin.right)
@@ -27,6 +27,7 @@ const xAxis = d3.axisBottom()
 
 
 const yAxis = d3.axisLeft()
+    .tickFormat(d3.format("$.2f"))
     .scale(yScale);
 
 
@@ -103,6 +104,20 @@ const label = svg.selectAll('.textLabels')
     .text(d => d.year)
     .each(position)
     .call(halo);
+   
+svg.append("text")
+    .attr('x', width/2 - 80)
+    .attr('y', height+40)
+    .attr("font-family", "sans-serif")
+    .attr("font-size", "15px")
+    .text("Miles per person per year");
+
+svg.append("text")
+    .attr('x', -70)
+    .attr('y', -20)
+    .attr("font-family", "sans-serif")
+    .attr("font-size", "15px")
+    .text("Cost per Gallon");
 
 })
 
