@@ -46,6 +46,7 @@ let yAxisGroup = svg.append("g")
 let line = d3.line()
     .curve(d3.curveCatmullRom)
     .x(d => xScale(d.miles))
+    
     .y(d => yScale(d.gas));
 
 
@@ -71,7 +72,7 @@ svg.append("g").call(yAxis)
 svg.append("path")
     .datum(data)
     .attr("fill", "none")
-    .attr("stroke", "black")
+    .attr("stroke", "#ff0000")
     .attr("stroke-width", 2.5)
     .attr("stroke-linejoin", "round")
     .attr("stroke-linecap", "round")
