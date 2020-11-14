@@ -23,11 +23,11 @@ let yScale = d3
     .range([height,0]);
 
 const xAxis = d3.axisBottom()
-    .scale(xScale)
+    .scale(xScale);
 
 
 const yAxis = d3.axisLeft()
-    .scale(yScale)
+    .scale(yScale);
 
 
 
@@ -87,10 +87,14 @@ let circles = svg.append('g')
     .call(halo);
 
 
-const label = circles.append('text')
-    .attr("transform", d => `translate(${xScale(d.miles)},${yScale(d.gas)})`)
-    .attr("opacity", 0)
+const label = svg.selectAll('.textLabels')
+    .data(data)
+    .enter()
     .append("text")
+    .attr('x', d => xScale(d.miles))
+    .attr('y', d => yScale(d.gas))
+    .attr("font-size", 10)
+    .attr("opacity", 1)
     .text(d => d.year)
     .each(position)
     .call(halo);
