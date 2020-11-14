@@ -1,8 +1,8 @@
 let data  = d3.csv('driving.csv', d3.autoType).then(data=>{
 
 const margin = ({top: 50, right: 140, bottom: 40, left: 140});
-const width = 800 - margin.left - margin.right;
-const height = 500 - margin.top - margin.bottom;
+const width = 1200 - margin.left - margin.right;
+const height = 650 - margin.top - margin.bottom;
 
 const svg = d3.select('.chart').append('svg')
     .attr("width", width + margin.left + margin.right)
@@ -45,21 +45,26 @@ let yAxisGroup = svg.append("g")
 let line = d3.line()
     .curve(d3.curveCatmullRom)
     .x(d => xScale(d.miles))
-    .y(d => yScale(d.gas))
+    .y(d => yScale(d.gas));
 
 
-
-svg.append("g")
+svg.append("g").call(xAxis)
     .attr("class", "axis x-axis")
-    //.attr("color", "#eee3c8")
-    .call(xAxis)
-    .attr("transform", `translate(0, ${height})`);
+    .attr("transform", `translate(0, ${height})`)
+    .call(g=> g.select(".domain").remove())
+    .selectAll(".tick line")
+    .clone()
+    .attr("y2", -height)
+    .attr("stroke-opacity", 0.1);
 
 
-svg.append("g")
+svg.append("g").call(yAxis)
     .attr("class", "axis y-axis")
-    //.attr("color", "#eee3c8")
-    .call(yAxis)
+    .call(g=> g.select(".domain").remove())
+    .selectAll(".tick line")
+    .clone()
+    .attr("x2", width)
+    .attr("stroke-opacity", 0.1);
 
 
 svg.append("path")
